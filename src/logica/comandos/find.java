@@ -43,18 +43,25 @@ public class find extends Comando {
 
         // find <startingdirectory> <options> <search term>
         Options options = new Options();
-        options.addOption("-name", false, "buscar archivos con el nombre indicado");
-        options.addOption("-iname", false, "buscar por archivos ignorando mayuscula/minuscula en el nombre");
-        options.addOption("-type", false, "buscar tipo de archivo");
+
+        options.addOption("name", true, "buscar archivos con el nombre indicado");
+        options.addOption("iname", true, "buscar por archivos ignorando mayuscula/minuscula en el nombre");
+        options.addOption("type", true, "buscar tipo de archivo");
         options.addOption("h", "help", false, "Imprime el mensaje de ayuda");
 
         try {
             parser = new BasicParser();
             cmdLine = parser.parse(options, args);
 
+            String[] argsRemanentes = cmdLine.getArgs();
+
             if (cmdLine.hasOption("h")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
-                formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
+                formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros: find <startingdirectory> <options> <search term>", options, 4, 3, "", true);
             }
+
+            String paramType = getOpcion("type", cmdLine);
+            String paramName = getOpcion("name", cmdLine);
+            String paramIName = getOpcion("iname", cmdLine);
 
             if (cmdLine.hasOption("-name")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
                 formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
@@ -108,33 +115,39 @@ public class find extends Comando {
 
     public static void main(String[] args) {
         try {
-            String CLI = "find /home -type a -iname *.txt";
+            find find = new find();
+            String CLI = "/home -type d -iname *.txt -h";
             args = CLI.split(" ");
+            String camino = find.extraerUrlDeArgs(args);
+            System.out.println("Camino:" + camino);
+
             CommandLineParser parser = new BasicParser();
             Options options = new Options();
-            options.addOption("name", false, "buscar archivos con el nombre indicado");
-            options.addOption("iname", false, "buscar por archivos ignorando mayuscula/minuscula en el nombre");
-            options.addOption("type", false, "buscar tipo de archivo");
+            options.addOption("name", true, "buscar archivos con el nombre indicado");
+            options.addOption("iname", true, "buscar por archivos ignorando mayuscula/minuscula en el nombre");
+            options.addOption("type", true, "buscar tipo de archivo");
             options.addOption("h", "help", false, "Imprime el mensaje de ayuda");
 
             CommandLine commandLine = parser.parse(options, args);
 
-            String optionA = getOpcion("type", commandLine);
-            String optionB = getOpcion("b", commandLine);
+            String[] argsRemanentes = commandLine.getArgs();
 
-            String[] remainingArguments = commandLine.getArgs();
+            String paramType = getOpcion("type", commandLine);
+            String paramName = getOpcion("name", commandLine);
+            String paramIName = getOpcion("iname", commandLine);
 
-            System.out.println(String.format("OptionA: %s, OptionB: %s", optionA, optionB));
-            System.out.println("Remaining arguments: " + Arrays.toString(remainingArguments));
+            //   String[] remainingArguments = commandLine.getArgs();
+            System.out.println(String.format("type: %s, name: %s, iname: %s", paramType, paramName, paramIName));
+            System.out.println("Remaining arguments: " + Arrays.toString(argsRemanentes));
         } catch (ParseException ex) {
             Logger.getLogger(find.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static String getOpcion(String option, CommandLine commandLine) {
-
         if (commandLine.hasOption(option)) {
-            return commandLine.getOptionValue(option);
+            String pp = commandLine.getOptionValue(option);
+            return pp;
         }
         return "";
     }
