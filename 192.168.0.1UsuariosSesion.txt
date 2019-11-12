@@ -1,0 +1,2 @@
+Santiago ; 1 ; true ; 5 ; true
+Sandra ; 1 ; false ; 5 ; false

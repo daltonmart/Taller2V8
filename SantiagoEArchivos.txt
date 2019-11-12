@@ -1,0 +1,3 @@
+/ ; 0 ; / ; 1 ; Santiago ; grupoS ; null ; 0 ; 21:00:00 3/09/2019
+home ; 0 ; / ; 1 ; Santiago ; grupoS ; null ; 0 ; 21:00:00 3/09/2019
+aSantiago ; 1 ; /home/ ; 1 ; Santiago ; grupoS ; Hola ; 0 ; 21:00:00 3/09/2019

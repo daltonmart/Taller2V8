@@ -1,0 +1,2 @@
+equipoMeli ; 127.7.1.0 ; true ; W10
+equipoSantiago ; 192.168.0.1 ; true ; Linux

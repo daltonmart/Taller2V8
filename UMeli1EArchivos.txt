@@ -1,0 +1,26 @@
+/ ; 0 ;  ; 777 ; root ; root ; null ; 0 ; Oct 20, 19 12:50
+home ; 0 ; / ; 666 ; root ; root ; null ; 0 ; Oct 20, 19 12:51
+Melisa ; 0 ; /home/ ; 744 ; Meli ; grupoM ; null ; 1 ; Oct 20, 19 12:52
+ameli001 ; 1 ; /home/Melisa/ ; 555 ; Meli ; grupoM ; Hola mundo!!!1111111 ; 5715 ; Oct 21, 19 12:53
+ameli002 ; 1 ; /home/Melisa/ ; 444 ; Meli ; grupoM ; Hola mundo!!!101 ; 3647 ; Oct 25, 19 12:54
+ameli003 ; 1 ; /home/Melisa/ ; 333 ; Meli ; grupoM ; Hola mundo!!!102 ; 5102 ; Oct 25, 19 12:55
+Sandra ; 0 ; /home/ ; 666 ; Sand ; grupoM ; null ; 0 ; Oct 20, 19 12:56
+san001 ; 1 ; /home/Sandra/ ; 222 ; Sand ; grupoM ; Hola mundo!!!103 ; 534 ; Oct 21, 19 12:57
+san002 ; 1 ; /home/Sandra/ ; 111 ; Sand ; grupoM ; Hola mundo!!!104 ; 4721 ; Oct 21, 19 12:58
+san003 ; 1 ; /home/Sandra/ ; 766 ; Sand ; grupoM ; Hola mundo!!!105 ; 5731 ; Oct 21, 19 12:59
+san004 ; 1 ; /home/Sandra/ ; 700 ; Sand ; grupoM ; Hola mundo!!!106 ; 5664 ; Oct 25, 19 01:00
+san005 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!107 ; 4951 ; Oct 22, 19 01:00
+san006 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!108 ; 6417 ; Oct 22, 19 01:00
+san007 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!109 ; 5391 ; Oct 25, 19 01:00
+san008 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!110 ; 1442 ; Oct 25, 19 01:00
+san009 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!111 ; 7382 ; Oct 22, 19 01:00
+Santiago ; 0 ; /home/ ; 744 ; Santi ; grupoM ; null ; 0 ; Oct 22, 19 01:00
+sant001 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!201 ; 5336 ; Oct 22, 19 01:00
+sant002 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!202 ; 9783 ; Oct 22, 19 01:00
+sant003 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!203 ; 6674 ; Oct 22, 19 01:00
+sant004 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!204 ; 3664 ; Oct 22, 19 01:00
+sant005 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!205 ; 6618 ; Oct 22, 19 01:00
+sant006 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!206 ; 8233 ; Oct 22, 19 01:00
+sant007 ; 1 ; /home/Santiago/ ; 744 ; Santi ; grupoM ; Hola mundo!!!207 ; 751 ; Oct 22, 19 01:00
+prueba ; 0 ; / ; 777 ; UMeli1 ; GUMeli1 ; null ; 0 ; Oct 22, 19 01:00
+ssss ; 0 ; / ; 777 ; UMeli1 ; GUMeli1 ; null ; 0 ; nov. 12, 19 00:52
