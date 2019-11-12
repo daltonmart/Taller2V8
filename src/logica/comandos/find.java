@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import logica.Comando;
 import logica.DataArchivo;
 import logica.EstructuraArchivos;
@@ -62,6 +64,14 @@ public class find extends Comando {
             String paramType = getOpcion("type", cmdLine);
             String paramName = getOpcion("name", cmdLine);
             String paramIName = getOpcion("iname", cmdLine);
+            String nombreBuscado = "*";
+
+            if (paramName.length() > 0) {
+                nombreBuscado = paramName;
+            }
+            if (paramIName.length() > 0) {
+                nombreBuscado = paramIName;
+            }
 
             if (cmdLine.hasOption("-name")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
                 formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
@@ -81,24 +91,37 @@ public class find extends Comando {
                     archivos = estructArchivos.getArchivos(url);
                 }
 
-                if (!cmdLine.hasOption("l")) {
-                    for (DataArchivo arch : archivos) {
+                for (DataArchivo arch : archivos) {
+                    Pattern pat = Pattern.compile(nombreBuscado);
+                    Matcher mat = pat.matcher(arch.getNombre());
+                    if (mat.matches()) {
                         pw.println(arch.getNombre());
                     }
-                } else {
-                    for (DataArchivo arch : archivos) {
-                        String perm = ""; // convertirOctalATexto(arch.getPermiso());
-                        //  pw.printf("%1i %9d %10s %10s %8i %14s %20s", arch.getTipo(),arch.getPermiso(),arch.getDuenio(),arch.getGrupo(),arch.getTamanio(),arch.getFechayhora(),arch.getNombre());
-                        pw.printf("%1s%-9s %-6s %-8s %5d %-14s %-20s \n", arch.getTipo() == 0 ? 'd' : '-', perm, arch.getDuenio(), arch.getGrupo(), arch.getTamanio(), arch.getFechayhora(), arch.getNombre());
-                    }
+                }
+            }
+            /*
+            if (!cmdLine.hasOption("l")) {
+                for (DataArchivo arch : archivos) {
+                    pw.println(arch.getNombre());
                 }
             } else {
+                for (DataArchivo arch : archivos) {
+                    String perm = ""; // convertirOctalATexto(arch.getPermiso());
+                    //  pw.printf("%1i %9d %10s %10s %8i %14s %20s", arch.getTipo(),arch.getPermiso(),arch.getDuenio(),arch.getGrupo(),arch.getTamanio(),arch.getFechayhora(),arch.getNombre());
+                    pw.printf("%1s%-9s %-6s %-8s %5d %-14s %-20s \n", arch.getTipo() == 0 ? 'd' : '-', perm, arch.getDuenio(), arch.getGrupo(), arch.getTamanio(), arch.getFechayhora(), arch.getNombre());
+                }
+            }
+
+        }else {
                 pw.println("No es un Archivo o Directorio");
             }
+             */
         } catch (org.apache.commons.cli.ParseException | java.lang.NumberFormatException ex) {
             formatter.printHelp(pw, 80, this.getClass().getCanonicalName(), "Parametros", options, 4, 3, "", true);
         }
+
         pw.flush();
+
         return salida.toString();
     }
 
@@ -139,8 +162,10 @@ public class find extends Comando {
             //   String[] remainingArguments = commandLine.getArgs();
             System.out.println(String.format("type: %s, name: %s, iname: %s", paramType, paramName, paramIName));
             System.out.println("Remaining arguments: " + Arrays.toString(argsRemanentes));
+
         } catch (ParseException ex) {
-            Logger.getLogger(find.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(find.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
