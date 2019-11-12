@@ -83,14 +83,12 @@ public class find extends Comando {
 
             DataArchivo arch1 = estructArchivos.getArchivoDeUrl(url);
             if (arch1 != null) {
-
                 ArrayList<DataArchivo> archivos = new ArrayList<>();
                 if (arch1.getTipo() == 1) {
                     archivos.add(arch1);
-                } else {
+                } else {  // aca va la opcion de recursivo en los directorios
                     archivos = estructArchivos.getArchivos(url);
                 }
-
                 for (DataArchivo arch : archivos) {
                     Pattern pat = Pattern.compile(nombreBuscado);
                     Matcher mat = pat.matcher(arch.getNombre());
@@ -99,29 +97,10 @@ public class find extends Comando {
                     }
                 }
             }
-            /*
-            if (!cmdLine.hasOption("l")) {
-                for (DataArchivo arch : archivos) {
-                    pw.println(arch.getNombre());
-                }
-            } else {
-                for (DataArchivo arch : archivos) {
-                    String perm = ""; // convertirOctalATexto(arch.getPermiso());
-                    //  pw.printf("%1i %9d %10s %10s %8i %14s %20s", arch.getTipo(),arch.getPermiso(),arch.getDuenio(),arch.getGrupo(),arch.getTamanio(),arch.getFechayhora(),arch.getNombre());
-                    pw.printf("%1s%-9s %-6s %-8s %5d %-14s %-20s \n", arch.getTipo() == 0 ? 'd' : '-', perm, arch.getDuenio(), arch.getGrupo(), arch.getTamanio(), arch.getFechayhora(), arch.getNombre());
-                }
-            }
-
-        }else {
-                pw.println("No es un Archivo o Directorio");
-            }
-             */
         } catch (org.apache.commons.cli.ParseException | java.lang.NumberFormatException ex) {
             formatter.printHelp(pw, 80, this.getClass().getCanonicalName(), "Parametros", options, 4, 3, "", true);
         }
-
         pw.flush();
-
         return salida.toString();
     }
 
