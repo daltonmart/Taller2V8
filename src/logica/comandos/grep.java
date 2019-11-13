@@ -41,7 +41,7 @@ public class grep extends Comando {
             pw.println("Sintaxis grep <texto buscado> <nombre de Archivo o Directorio>");
         } else {
 //            Pattern patron = null;        // Compiled RE
-//            try {
+//            try { 
             //patron = Pattern.compile(args[0]);
             String textoBuscado = args[0];
             urlEntrada = args[1];
