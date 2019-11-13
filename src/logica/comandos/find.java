@@ -1,6 +1,5 @@
 package logica.comandos;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class find extends Comando {
             parser = new BasicParser();
             cmdLine = parser.parse(options, args);
 
-            String[] argsRemanentes = cmdLine.getArgs();
+            String[] argsRemanentes = cmdLine.getArgs(); // para control errores
 
             if (cmdLine.hasOption("h")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
                 formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros: find <startingdirectory> <options> <search term>", options, 4, 3, "", true);
@@ -72,10 +71,21 @@ public class find extends Comando {
             if (paramIName.length() > 0) {
                 nombreBuscado = paramIName;
             }
-
-            if (cmdLine.hasOption("-name")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
-                formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
+            if (nombreBuscado.length() == 2) {
+                if (nombreBuscado.substring(1, 2).equals("*")) {
+                    nombreBuscado = nombreBuscado.substring(0, 1) + nombreBuscado;
+                }
             }
+
+            if (nombreBuscado.contains("*")) {
+                nombreBuscado += ".*";
+            }
+//            if (paramIName.length() > 0) {
+//                nombreBuscado = "/"+paramIName+"/gi";
+//            }
+//          if (cmdLine.hasOption("-name")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
+//                formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
+//            }
             EstructuraArchivos estructArchivos = red.getEquipoActual().getCompuestoPorUsuarios().buscarUsuarioConectado().getCompuestoPorArchivos();
 
             String urlEntrada = extraerUrlDeArgs(args);
@@ -89,10 +99,11 @@ public class find extends Comando {
                 } else {  // aca va la opcion de recursivo en los directorios
                     archivos = estructArchivos.getArchivos(url);
                 }
+                Pattern patronBusqueda = Pattern.compile(nombreBuscado);
                 for (DataArchivo arch : archivos) {
-                    Pattern pat = Pattern.compile(nombreBuscado);
-                    Matcher mat = pat.matcher(arch.getNombre());
-                    if (mat.matches()) {
+
+                    Matcher resultado = patronBusqueda.matcher(arch.getNombre());
+                    if (resultado.matches()) { /// if (resultado.find()) {
                         pw.println(arch.getNombre());
                     }
                 }
@@ -123,20 +134,6 @@ public class find extends Comando {
             String camino = find.extraerUrlDeArgs(args);
             System.out.println("Camino:" + camino);
 
-            CommandLineParser parser = new BasicParser();
-            Options options = new Options();
-            options.addOption("name", true, "buscar archivos con el nombre indicado");
-            options.addOption("iname", true, "buscar por archivos ignorando mayuscula/minuscula en el nombre");
-            options.addOption("type", true, "buscar tipo de archivo");
-            options.addOption("h", "help", false, "Imprime el mensaje de ayuda");
-
-            CommandLine commandLine = parser.parse(options, args);
-
-            String[] argsRemanentes = commandLine.getArgs();
-
-            String paramType = getOpcion("type", commandLine);
-            String paramName = getOpcion("name", commandLine);
-            String paramIName = getOpcion("iname", commandLine);
 
             //   String[] remainingArguments = commandLine.getArgs();
             System.out.println(String.format("type: %s, name: %s, iname: %s", paramType, paramName, paramIName));
