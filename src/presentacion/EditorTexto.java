@@ -95,5 +95,4 @@ public class EditorTexto {
         ventana.setResizable(true);
         ventana.setLocationRelativeTo(null);
     }
-
 }
