@@ -127,7 +127,7 @@ public class find extends Comando {
     }
 
     public static void main(String[] args) {
-        try {
+ 
             find find = new find();
             String CLI = "/home -type d -iname *.txt -h";
             args = CLI.split(" ");
@@ -135,14 +135,7 @@ public class find extends Comando {
             System.out.println("Camino:" + camino);
 
 
-            //   String[] remainingArguments = commandLine.getArgs();
-            System.out.println(String.format("type: %s, name: %s, iname: %s", paramType, paramName, paramIName));
-            System.out.println("Remaining arguments: " + Arrays.toString(argsRemanentes));
 
-        } catch (ParseException ex) {
-            Logger.getLogger(find.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static String getOpcion(String option, CommandLine commandLine) {
