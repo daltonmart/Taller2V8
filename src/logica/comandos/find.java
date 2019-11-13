@@ -1,6 +1,5 @@
 package logica.comandos;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class find extends Comando {
             parser = new BasicParser();
             cmdLine = parser.parse(options, args);
 
-            String[] argsRemanentes = cmdLine.getArgs();
+            String[] argsRemanentes = cmdLine.getArgs(); // para control errores
 
             if (cmdLine.hasOption("h")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
                 formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros: find <startingdirectory> <options> <search term>", options, 4, 3, "", true);
@@ -69,31 +68,46 @@ public class find extends Comando {
             if (paramName.length() > 0) {
                 nombreBuscado = paramName;
             }
+            int caseSensible = 0;
+
             if (paramIName.length() > 0) {
                 nombreBuscado = paramIName;
+                caseSensible = Pattern.CASE_INSENSITIVE;
             }
-
-            if (cmdLine.hasOption("-name")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
-                formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
-            }
-            EstructuraArchivos estructArchivos = red.getEquipoActual().getCompuestoPorUsuarios().buscarUsuarioConectado().getCompuestoPorArchivos();
-
-            String urlEntrada = extraerUrlDeArgs(args);
-            String url = estructArchivos.getUrlAbsoluta(urlEntrada);
-
-            DataArchivo arch1 = estructArchivos.getArchivoDeUrl(url);
-            if (arch1 != null) {
-                ArrayList<DataArchivo> archivos = new ArrayList<>();
-                if (arch1.getTipo() == 1) {
-                    archivos.add(arch1);
-                } else {  // aca va la opcion de recursivo en los directorios
-                    archivos = estructArchivos.getArchivos(url);
+            if (nombreBuscado.length() == 2) {
+                if (nombreBuscado.substring(1, 2).equals("*")) {
+                    nombreBuscado = nombreBuscado.substring(0, 1) + nombreBuscado;
                 }
-                for (DataArchivo arch : archivos) {
-                    Pattern pat = Pattern.compile(nombreBuscado);
-                    Matcher mat = pat.matcher(arch.getNombre());
-                    if (mat.matches()) {
-                        pw.println(arch.getNombre());
+            }
+
+            if (nombreBuscado.contains("*")) {
+                nombreBuscado += ".*";
+            }
+            nombreBuscado = "^" + nombreBuscado; //+".*";
+            if (cmdLine.hasOption("-h")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
+                formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
+            } else {
+                EstructuraArchivos estructArchivos = red.getEquipoActual().getCompuestoPorUsuarios().buscarUsuarioConectado().getCompuestoPorArchivos();
+
+                String urlEntrada = extraerUrlDeArgs(args);
+                String url = estructArchivos.getUrlAbsoluta(urlEntrada);
+
+                DataArchivo arch1 = estructArchivos.getArchivoDeUrl(url);
+                if (arch1 != null) {
+                    ArrayList<DataArchivo> archivos = new ArrayList<>();
+                    if (arch1.getTipo() == 1) {
+                        archivos.add(arch1);
+                    } else {  // aca va la opcion de recursivo en los directorios
+                        archivos = estructArchivos.getArchivos(url);
+                    }
+
+                    Pattern patronBusqueda = Pattern.compile(nombreBuscado, caseSensible);
+                    for (DataArchivo arch : archivos) {
+
+                        Matcher resultado = patronBusqueda.matcher(arch.getNombre());
+                        if (resultado.matches()) { /// if (resultado.find()) {
+                            pw.println(arch.getNombre());
+                        }
                     }
                 }
             }
@@ -116,36 +130,39 @@ public class find extends Comando {
     }
 
     public static void main(String[] args) {
-        try {
-            find find = new find();
-            String CLI = "/home -type d -iname *.txt -h";
-            args = CLI.split(" ");
-            String camino = find.extraerUrlDeArgs(args);
-            System.out.println("Camino:" + camino);
 
-            CommandLineParser parser = new BasicParser();
-            Options options = new Options();
-            options.addOption("name", true, "buscar archivos con el nombre indicado");
-            options.addOption("iname", true, "buscar por archivos ignorando mayuscula/minuscula en el nombre");
-            options.addOption("type", true, "buscar tipo de archivo");
-            options.addOption("h", "help", false, "Imprime el mensaje de ayuda");
+        find find = new find();
+        String CLI = "/home -type d -iname *.txt -h";
+        args = CLI.split(" ");
+        String camino = find.extraerUrlDeArgs(args);
+        // System.out.println("Camino:" + camino);
 
-            CommandLine commandLine = parser.parse(options, args);
+        ArrayList<String> nombres = new ArrayList<>();
 
-            String[] argsRemanentes = commandLine.getArgs();
+        nombres.add("Melisa");
+        nombres.add("Sandra");
+        nombres.add("Santiago");
+        nombres.add("Dalton");
+        nombres.add("Pedro.txt");
 
-            String paramType = getOpcion("type", commandLine);
-            String paramName = getOpcion("name", commandLine);
-            String paramIName = getOpcion("iname", commandLine);
+        String archivo = "Sandra";
+        String nombreBuscado = "^" + archivo; //+".*";
+        // https://www.regular-expressions.info/java.html
+        //https://www.logicbig.com/tutorials/core-java-tutorial/java-regular-expressions/regex-embedded-flags.html
+        // String nombreBuscado = "sandra";
+        int opciones = Pattern.CASE_INSENSITIVE;
 
-            //   String[] remainingArguments = commandLine.getArgs();
-            System.out.println(String.format("type: %s, name: %s, iname: %s", paramType, paramName, paramIName));
-            System.out.println("Remaining arguments: " + Arrays.toString(argsRemanentes));
+        Pattern patronBusqueda = Pattern.compile(nombreBuscado, 0);
+        for (String nomb : nombres) {
 
-        } catch (ParseException ex) {
-            Logger.getLogger(find.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Matcher resultado = patronBusqueda.matcher(nomb);
+            if (resultado.matches()) { /// if (resultado.find()) {
+                System.out.println(nomb + "<<<<<");
+            } else {
+                System.out.println(">>>>>>>" + nomb);
+            }
         }
+
     }
 
     public static String getOpcion(String option, CommandLine commandLine) {
