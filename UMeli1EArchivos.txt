@@ -5,11 +5,11 @@ ameli001 ; 1 ; /home/Melisa/ ; 555 ; Meli ; grupoM ; Hola mundo!!!1111111 ; 5715
 ameli002 ; 1 ; /home/Melisa/ ; 444 ; Meli ; grupoM ; Hola mundo!!!101 ; 3647 ; Oct 25, 19 12:54
 ameli003 ; 1 ; /home/Melisa/ ; 333 ; Meli ; grupoM ; Hola mundo!!!102 ; 5102 ; Oct 25, 19 12:55
 Sandra ; 0 ; /home/ ; 666 ; Sand ; grupoM ; null ; 0 ; Oct 20, 19 12:56
-san001 ; 1 ; /home/Sandra/ ; 222 ; Sand ; grupoM ; Hola mundo!!!103 ; 534 ; Oct 21, 19 12:57
+.san001 ; 1 ; /home/Sandra/ ; 222 ; Sand ; grupoM ; Hola mundo!!!103 ; 534 ; Oct 21, 19 12:57
 san002 ; 1 ; /home/Sandra/ ; 111 ; Sand ; grupoM ; Hola mundo!!!104 ; 4721 ; Oct 21, 19 12:58
-san003 ; 1 ; /home/Sandra/ ; 766 ; Sand ; grupoM ; Hola mundo!!!105 ; 5731 ; Oct 21, 19 12:59
+.san003 ; 1 ; /home/Sandra/ ; 766 ; Sand ; grupoM ; Hola mundo!!!105 ; 5731 ; Oct 21, 19 12:59
 san004 ; 1 ; /home/Sandra/ ; 700 ; Sand ; grupoM ; Hola mundo!!!106 ; 5664 ; Oct 25, 19 01:00
-san005 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!107 ; 4951 ; Oct 22, 19 01:00
+.san005 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!107 ; 4951 ; Oct 22, 19 01:00
 san006 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!108 ; 6417 ; Oct 22, 19 01:00
 san007 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!109 ; 5391 ; Oct 25, 19 01:00
 san008 ; 1 ; /home/Sandra/ ; 744 ; Sand ; grupoM ; Hola mundo!!!110 ; 1442 ; Oct 25, 19 01:00
