@@ -45,7 +45,7 @@ public class echo extends Comando {
                     pw.println("Si indico directorio y se necesita un archivo");
                 }
             } else {
-                pw.println("No se encontro eForma de uso:  echo \"texto buscado\" > archivo");
+                pw.println("No se encontro el archivo");
             }
 
         } else {
