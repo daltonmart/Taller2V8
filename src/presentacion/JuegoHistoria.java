@@ -1,4 +1,3 @@
-
 package presentacion;
 
 import AppPackage.AnimationClass;
@@ -14,24 +13,20 @@ import static logica.ISistemaPrincipalImpl.historia;
 import static logica.ISistemaPrincipalImpl.iJuego;
 import static presentacion.Principal.iPrincipal;
 
-
 public class JuegoHistoria extends javax.swing.JFrame {
-        
-    
-            
+
     public JuegoHistoria() {
-        
+
         inicializar();
         iniciarCampania();
     }
 
-
-    private void iniciarCampania(){       
+    private void iniciarCampania() {
         jlContenidoHistoria.setText(iPrincipal.obtenerHistoriaUsuarioSesion());
-        jlContenidoPista.setText(historia.obtenerPistaDeCampania(iSesion.getNroCampania(),iSesion.getProgreso()));
-        
+        jlContenidoPista.setText(historia.obtenerPistaDeCampania(iSesion.getNroCampania(), iSesion.getProgreso()));
+
     }
-    
+
     private void inicializar() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -39,8 +34,7 @@ public class JuegoHistoria extends javax.swing.JFrame {
         jtxtTerminal.setCaretPosition(iPrincipal.getPrompt().length());
         System.out.println("** Iniciando Terminal **");
     }
-   
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -272,14 +266,13 @@ public class JuegoHistoria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
-    
+
     private void jlCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlCerrarMouseClicked
-        int dialog=JOptionPane.YES_NO_OPTION;
-        int result=JOptionPane.showConfirmDialog(null,"Desea Salir de Terminal","Salir de Terminal",dialog);
-        if (result==0)
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "Desea Salir de Terminal", "Salir de Terminal", dialog);
+        if (result == 0) {
             this.setVisible(false);
+        }
     }//GEN-LAST:event_jlCerrarMouseClicked
 
     private void jlMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimizarMouseClicked
@@ -287,26 +280,43 @@ public class JuegoHistoria extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimizarMouseClicked
 
     private void jtxtTerminalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtTerminalKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_LEFT || evt.getKeyCode() == KeyEvent.VK_RIGHT ) {
+            try {
+                int longPrompt = iPrincipal.getPrompt().length();
+                int posCursor = jtxtTerminal.getCaretPosition();
+                int lineaNro = jtxtTerminal.getLineOfOffset(posCursor);
+                int posInicioLinea = jtxtTerminal.getLineStartOffset(lineaNro)+longPrompt;
+                if(posCursor <= posInicioLinea) {
+                    evt.consume();
+                    jtxtTerminal.setCaretPosition(posInicioLinea);
+                }
+            } catch (BadLocationException ex) {
+                Logger.getLogger(JuegoHistoria.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
                 evt.consume();
                 int longPrompt = iPrincipal.getPrompt().length();
                 int posCursor = jtxtTerminal.getCaretPosition();
-                int lineaNro = jtxtTerminal.getLineOfOffset(posCursor);                
-                int posInicioLinea = jtxtTerminal.getLineStartOffset(lineaNro)+longPrompt;
+                int lineaNro = jtxtTerminal.getLineOfOffset(posCursor);
+                int posInicioLinea = jtxtTerminal.getLineStartOffset(lineaNro) + longPrompt;
                 int posFinalLinea = jtxtTerminal.getLineEndOffset(lineaNro);
-                String lineaTextoIngresada = jtxtTerminal.getText(posInicioLinea, posFinalLinea-posInicioLinea);
-                System.out.println("* texto -> ["+lineaTextoIngresada+"]");
+                String lineaTextoIngresada = jtxtTerminal.getText(posInicioLinea, posFinalLinea - posInicioLinea);
+                System.out.println("* texto -> [" + lineaTextoIngresada + "]");
                 // *****************************************
                 // se envia a procesar la linea se comandos
                 // *****************************************   
                 //Se instancia terminal arriba
                 String salidaDelComando = iPrincipal.manejoComandoDeITerminal(lineaTextoIngresada);
 
-                jtxtTerminal.setText(jtxtTerminal.getText()+"\n"+salidaDelComando+"\n"+iPrincipal.getPrompt());
+                jtxtTerminal.setText(jtxtTerminal.getText() + "\n" + salidaDelComando + "\n" + iPrincipal.getPrompt());
                 jtxtTerminal.repaint();
+
             } catch (BadLocationException ex) {
-                Logger.getLogger(JuegoHistoria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(JuegoHistoria.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jtxtTerminalKeyPressed
@@ -314,85 +324,83 @@ public class JuegoHistoria extends javax.swing.JFrame {
     private void jlMostrarPistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMostrarPistaMouseClicked
 
         //Deslizar label nombre
-        AnimationClass adm=new AnimationClass();
-        adm.jLabelXLeft(20,-290,10,5,jlMostrarPista);
-        AnimationClass admm=new AnimationClass();
-        admm.jLabelXRight(-290,20,10,5,jlMostrarPista);
+        AnimationClass adm = new AnimationClass();
+        adm.jLabelXLeft(20, -290, 10, 5, jlMostrarPista);
+        AnimationClass admm = new AnimationClass();
+        admm.jLabelXRight(-290, 20, 10, 5, jlMostrarPista);
         //Deslizar base transparente
-        AnimationClass admtransp=new AnimationClass();
-        admtransp.jLabelXLeft(-290,20,10,5,jlbtranpMostrarPista);
-        AnimationClass admtranspp=new AnimationClass();
-        admtranspp.jLabelXRight(20,-290,10,5,jlbtranpMostrarPista);
+        AnimationClass admtransp = new AnimationClass();
+        admtransp.jLabelXLeft(-290, 20, 10, 5, jlbtranpMostrarPista);
+        AnimationClass admtranspp = new AnimationClass();
+        admtranspp.jLabelXRight(20, -290, 10, 5, jlbtranpMostrarPista);
 
         //Desplaza a los demás fuera del frame
-
         //Aparezca el menu contenido Pista
         //************** Pista**************
         //Deslizar label nombre
-        AnimationClass admCrearUsr1=new AnimationClass();
-        admCrearUsr1.jLabelXRight(-290,20,10,5,jlOcultarPista);
-        AnimationClass admmCrearUsr1=new AnimationClass();
-        admmCrearUsr1.jLabelXLeft(20,-290,10,5,jlOcultarPista);
-        
+        AnimationClass admCrearUsr1 = new AnimationClass();
+        admCrearUsr1.jLabelXRight(-290, 20, 10, 5, jlOcultarPista);
+        AnimationClass admmCrearUsr1 = new AnimationClass();
+        admmCrearUsr1.jLabelXLeft(20, -290, 10, 5, jlOcultarPista);
+
         //Deslizar label nombre
-        AnimationClass admCrearUsr=new AnimationClass();
-        admCrearUsr.jLabelXRight(-290,20,10,5,jlContenidoPista);
-        AnimationClass admmCrearUsr=new AnimationClass();
-        admmCrearUsr.jLabelXLeft(20,-290,10,5,jlContenidoPista);
-        
+        AnimationClass admCrearUsr = new AnimationClass();
+        admCrearUsr.jLabelXRight(-290, 20, 10, 5, jlContenidoPista);
+        AnimationClass admmCrearUsr = new AnimationClass();
+        admmCrearUsr.jLabelXLeft(20, -290, 10, 5, jlContenidoPista);
+
         //Deslizar label nombre
-        AnimationClass admCrearUsr2=new AnimationClass();
-        admCrearUsr2.jLabelXRight(-100,20,10,5,jlTituloPista);
-        AnimationClass admmCrearUsr2=new AnimationClass();
-        admmCrearUsr2.jLabelXLeft(20,-100,10,5,jlTituloPista);
+        AnimationClass admCrearUsr2 = new AnimationClass();
+        admCrearUsr2.jLabelXRight(-100, 20, 10, 5, jlTituloPista);
+        AnimationClass admmCrearUsr2 = new AnimationClass();
+        admmCrearUsr2.jLabelXLeft(20, -100, 10, 5, jlTituloPista);
 
         //Deslizar base transparente
-        AnimationClass admtranspCrearUsr=new AnimationClass();
-        admtranspCrearUsr.jLabelXRight(-290,20,10,5,jlbtranpOcultarPista);
-        AnimationClass admtransppCrearUsr=new AnimationClass();
-        admtransppCrearUsr.jLabelXLeft(20,-290,10,5,jlbtranpOcultarPista);
+        AnimationClass admtranspCrearUsr = new AnimationClass();
+        admtranspCrearUsr.jLabelXRight(-290, 20, 10, 5, jlbtranpOcultarPista);
+        AnimationClass admtransppCrearUsr = new AnimationClass();
+        admtransppCrearUsr.jLabelXLeft(20, -290, 10, 5, jlbtranpOcultarPista);
 
     }//GEN-LAST:event_jlMostrarPistaMouseClicked
 
     private void jlOcultarPistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOcultarPistaMouseClicked
         //Deslizar label nombre
-        AnimationClass adm=new AnimationClass();
-        adm.jLabelXLeft(20,-290,10,5,jlOcultarPista);
-        AnimationClass admm=new AnimationClass();
-        admm.jLabelXRight(-290,20,10,5,jlOcultarPista);
-        
-        AnimationClass adm2=new AnimationClass();
-        adm2.jLabelXLeft(20,-100,10,5,jlTituloPista);
-        AnimationClass admm2=new AnimationClass();
-        admm2.jLabelXRight(-100,20,10,5,jlTituloPista);
-        
+        AnimationClass adm = new AnimationClass();
+        adm.jLabelXLeft(20, -290, 10, 5, jlOcultarPista);
+        AnimationClass admm = new AnimationClass();
+        admm.jLabelXRight(-290, 20, 10, 5, jlOcultarPista);
+
+        AnimationClass adm2 = new AnimationClass();
+        adm2.jLabelXLeft(20, -100, 10, 5, jlTituloPista);
+        AnimationClass admm2 = new AnimationClass();
+        admm2.jLabelXRight(-100, 20, 10, 5, jlTituloPista);
+
         //Deslizar base transparente
-        AnimationClass admtransp=new AnimationClass();
-        admtransp.jLabelXLeft(-290,20,10,5,jlbtranpOcultarPista);
-        AnimationClass admtranspp=new AnimationClass();
-        admtranspp.jLabelXRight(20,-290,10,5,jlbtranpOcultarPista);
+        AnimationClass admtransp = new AnimationClass();
+        admtransp.jLabelXLeft(-290, 20, 10, 5, jlbtranpOcultarPista);
+        AnimationClass admtranspp = new AnimationClass();
+        admtranspp.jLabelXRight(20, -290, 10, 5, jlbtranpOcultarPista);
 
         //Desplaza a los demás fuera del frame
-
         //Aparezca el menu contenido Pista
         //************** Pista**************
         //Deslizar label nombre
-        AnimationClass admCrearUsr1=new AnimationClass();
-        admCrearUsr1.jLabelXRight(-290,20,10,5,jlMostrarPista);
-        AnimationClass admmCrearUsr1=new AnimationClass();
-        admmCrearUsr1.jLabelXLeft(20,-290,10,5,jlMostrarPista);
-        
+        AnimationClass admCrearUsr1 = new AnimationClass();
+        admCrearUsr1.jLabelXRight(-290, 20, 10, 5, jlMostrarPista);
+        AnimationClass admmCrearUsr1 = new AnimationClass();
+        admmCrearUsr1.jLabelXLeft(20, -290, 10, 5, jlMostrarPista);
+
         //Deslizar label nombre
-        AnimationClass admCrearUsr=new AnimationClass();
-        admCrearUsr.jLabelXRight(-290,20,10,5,jlContenidoPista);
-        AnimationClass admmCrearUsr=new AnimationClass();
-        admmCrearUsr.jLabelXLeft(20,-290,10,5,jlContenidoPista);
+        AnimationClass admCrearUsr = new AnimationClass();
+        admCrearUsr.jLabelXRight(-290, 20, 10, 5, jlContenidoPista);
+        AnimationClass admmCrearUsr = new AnimationClass();
+        admmCrearUsr.jLabelXLeft(20, -290, 10, 5, jlContenidoPista);
 
         //Deslizar base transparente
-        AnimationClass admtranspCrearUsr=new AnimationClass();
-        admtranspCrearUsr.jLabelXRight(-290,20,10,5,jlbtranpMostrarPista);
-        AnimationClass admtransppCrearUsr=new AnimationClass();
-        admtransppCrearUsr.jLabelXLeft(20,-290,10,5,jlbtranpMostrarPista);
+        AnimationClass admtranspCrearUsr = new AnimationClass();
+        admtranspCrearUsr.jLabelXRight(-290, 20, 10, 5, jlbtranpMostrarPista);
+        AnimationClass admtransppCrearUsr = new AnimationClass();
+        admtransppCrearUsr.jLabelXLeft(20, -290, 10, 5, jlbtranpMostrarPista);
 
 
     }//GEN-LAST:event_jlOcultarPistaMouseClicked
@@ -400,8 +408,6 @@ public class JuegoHistoria extends javax.swing.JFrame {
     private void jSiguienteMisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSiguienteMisionActionPerformed
         iPrincipal.avanceMision();
     }//GEN-LAST:event_jSiguienteMisionActionPerformed
-
-    
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -414,16 +420,24 @@ public class JuegoHistoria extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -457,8 +471,4 @@ public class JuegoHistoria extends javax.swing.JFrame {
     private javax.swing.JTextArea jtxtTerminal;
     // End of variables declaration//GEN-END:variables
 
-    
-
-
 }
-

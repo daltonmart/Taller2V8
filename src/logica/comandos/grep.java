@@ -37,14 +37,11 @@ public class grep extends Comando {
         Integer permisos = 0;
         String urlEntrada = "";
 
-        if (args.length != 2) {
-            pw.println("Sintaxis grep <texto buscado> <nombre de Archivo o Directorio>");
-        } else {
-//            Pattern patron = null;        // Compiled RE
-//            try { 
-            //patron = Pattern.compile(args[0]);
-            String textoBuscado = args[0];
-            urlEntrada = args[1];
+        String lineaCLI = String.join(" ", args);
+        String[] textoEntreComillas = lineaCLI.split("\"");
+        String textoBuscado = textoEntreComillas[1];
+        if (textoBuscado.length() > 0) {
+            urlEntrada = args[args.length - 1];
             String url = estructArchivos.getUrlAbsoluta(urlEntrada);
             DataArchivo archivo = estructArchivos.getArchivoDeUrl(url);
             if (archivo != null) {
@@ -52,15 +49,9 @@ public class grep extends Comando {
                 if (contenido.contains(textoBuscado)) {
                     pw.println(contenido);
                 }
-                //int pos = contenido.indexOf(textoBuscado);
-                //contenido = contenido.substring(pos + textoBuscado.length(), contenido.length());
-//                        Matcher m = patron.matcher(contenido);
-//                        if (m.find()) {
-//                            System.out.println(s);
-//                        }
-            } else {
-                pw.println("No se encontro :" + urlEntrada);
             }
+        } else {
+            pw.println("No se encontro :" + urlEntrada);
         }
         pw.flush();
         return salida.toString();

@@ -128,43 +128,7 @@ public class find extends Comando {
         }
         return url;
     }
-
-    public static void main(String[] args) {
-
-        find find = new find();
-        String CLI = "/home -type d -iname *.txt -h";
-        args = CLI.split(" ");
-        String camino = find.extraerUrlDeArgs(args);
-        // System.out.println("Camino:" + camino);
-
-        ArrayList<String> nombres = new ArrayList<>();
-
-        nombres.add("Melisa");
-        nombres.add("Sandra");
-        nombres.add("Santiago");
-        nombres.add("Dalton");
-        nombres.add("Pedro.txt");
-
-        String archivo = "Sandra";
-        String nombreBuscado = "^" + archivo; //+".*";
-        // https://www.regular-expressions.info/java.html
-        //https://www.logicbig.com/tutorials/core-java-tutorial/java-regular-expressions/regex-embedded-flags.html
-        // String nombreBuscado = "sandra";
-        int opciones = Pattern.CASE_INSENSITIVE;
-
-        Pattern patronBusqueda = Pattern.compile(nombreBuscado, 0);
-        for (String nomb : nombres) {
-
-            Matcher resultado = patronBusqueda.matcher(nomb);
-            if (resultado.matches()) { /// if (resultado.find()) {
-                System.out.println(nomb + "<<<<<");
-            } else {
-                System.out.println(">>>>>>>" + nomb);
-            }
-        }
-
-    }
-
+    
     public static String getOpcion(String option, CommandLine commandLine) {
         if (commandLine.hasOption(option)) {
             String pp = commandLine.getOptionValue(option);

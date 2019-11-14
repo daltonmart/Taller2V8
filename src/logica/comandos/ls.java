@@ -3,6 +3,7 @@ package logica.comandos;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import logica.Comando;
 import logica.DataArchivo;
 import logica.EstructuraArchivos;
@@ -13,8 +14,8 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 
-
 public class ls extends Comando {
+
     private String[] args;
 
     public ls() {
@@ -24,15 +25,18 @@ public class ls extends Comando {
         args = argumentos.split(" ");
     }
 
+    @SuppressWarnings("empty-statement")
     public String ejecutarComando() {
         CommandLineParser parser = null;
         CommandLine cmdLine = null;
         HelpFormatter formatter = new HelpFormatter();
         StringWriter salida = new StringWriter();
         PrintWriter pw = new PrintWriter(salida);
- 
+
         Options options = new Options();
+        options.addOption("a", false, "lista en formato largo");
         options.addOption("l", false, "lista en formato largo");
+        options.addOption("r", false, "lista en formato largo");
         options.addOption("h", "help", false, "Imprime el mensaje de ayuda");
 
         try {
@@ -43,13 +47,12 @@ public class ls extends Comando {
             if (cmdLine.hasOption("h")) {    // No hace falta preguntar por el parámetro "help". Ambos son sinónimos                  
                 formatter.printHelp(pw, 80, this.getClass().getSimpleName(), "Parametros", options, 4, 3, "", true);
             }
-            
-            EstructuraArchivos estructArchivos =  red.getEquipoActual().getCompuestoPorUsuarios().buscarUsuarioConectado().getCompuestoPorArchivos();
 
-                    
+            EstructuraArchivos estructArchivos = red.getEquipoActual().getCompuestoPorUsuarios().buscarUsuarioConectado().getCompuestoPorArchivos();
+
             String urlEntrada = extraerUrlDeArgs(args);
             String url = estructArchivos.getUrlAbsoluta(urlEntrada);
-            
+
             DataArchivo arch1 = estructArchivos.getArchivoDeUrl(url);
             if (arch1 != null) {
 
@@ -59,7 +62,21 @@ public class ls extends Comando {
                 } else {
                     archivos = estructArchivos.getArchivos(url);
                 }
-
+                if (!cmdLine.hasOption("a")) {  // eliminar archivos ocultos
+                    int i = archivos.size();
+                    while (i>0) {
+                        i--;
+                        DataArchivo arch=archivos.get(i);
+                        if (arch.getNombre().startsWith(".")) {
+                            archivos.remove(arch);
+                        }
+                    }
+                }
+                if (cmdLine.hasOption("r")) {  // eliminar archivos ocultos
+                    archivos.sort(Comparator.comparing(DataArchivo::getNombre).reversed());
+                } else {
+                    archivos.sort(Comparator.comparing(DataArchivo::getNombre));
+                }
                 if (!cmdLine.hasOption("l")) {
                     for (DataArchivo arch : archivos) {
                         pw.println(arch.getNombre());
@@ -72,7 +89,7 @@ public class ls extends Comando {
                     }
                 }
             } else {
-            pw.println("No es un Archivo o Directorio");
+                pw.println("No es un Archivo o Directorio");
             }
         } catch (org.apache.commons.cli.ParseException | java.lang.NumberFormatException ex) {
             formatter.printHelp(pw, 80, this.getClass().getCanonicalName(), "Parametros", options, 4, 3, "", true);
@@ -96,7 +113,7 @@ public class ls extends Comando {
     public String ejecutarYverificar() {
         return ejecutarComando();
     }
-    
+
     private String convertirOctalATexto(int permisos) {
         StringBuilder resultado = new StringBuilder(9);
         String nroOctal = String.valueOf(permisos);
@@ -114,5 +131,3 @@ public class ls extends Comando {
     }
 
 }
-
-

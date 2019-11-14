@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/junta/NetBeansProjects/Taller2v8.1/src/logica/comandos/chmod.java</file>
+            <file>file:/home/junta/NetBeansProjects/Taller2v8.1/src/logica/comandos/echo.java</file>
+            <file>file:/home/junta/NetBeansProjects/Taller2v8.1/src/logica/comandos/cd.java</file>
             <file>file:/home/junta/NetBeansProjects/Taller2v8.1/src/logica/comandos/find.java</file>
+            <file>file:/home/junta/NetBeansProjects/Taller2v8.1/src/logica/comandos/grep.java</file>
+            <file>file:/home/junta/NetBeansProjects/Taller2v8.1/src/logica/comandos/edit.java</file>
         </group>
     </open-files>
 </project-private>

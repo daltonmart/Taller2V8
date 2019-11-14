@@ -8,13 +8,13 @@ import logica.EstructuraArchivos;
 import static logica.ISistemaPrincipalImpl.red;
 import presentacion.EditorTexto;
 
-public class edit extends Comando {
+public class hack extends Comando {
     private String[] args;
 
-    public edit() {
+    public hack() {
     }
 
-    public edit(String argumentos) {
+    public hack(String argumentos) {
         this.args = argumentos.split(" ");
     }
 
